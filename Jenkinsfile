@@ -1,25 +1,25 @@
 pipeline {
-  agent any
-  stages {
-    stage('Build') {
-      agent any
-      steps {
-        sh 'mvn -B -DskipTests clean package'
-      }
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn -B -DskipTests clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        stage('Deliver') { 
+            steps {
+                sh './jenkins/scripts/deliver.sh' 
+            }
+        }
     }
-    stage('Test') {
-      agent any
-      environment {
-        CI = 'true'
-      }
-      steps {
-        sh './jenkins/scripts/test.sh'
-      }
-    }
-    stage('Deliver') {
-      steps {
-        sh 'sh \'./jenkins/scripts/deliver.sh\''
-      }
-    }
-  }
 }
