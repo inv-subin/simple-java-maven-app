@@ -10,7 +10,7 @@ pipeline {
     stage('Test') {
       agent any
       steps {
-        sh 'sh \'mvn test\''
+        sh './jenkins/scripts/test.sh'
       }
     }
     stage('Deliver') {
