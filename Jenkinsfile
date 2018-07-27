@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Deliver') { 
             steps {
-                sh './jenkins/scripts/deliver.sh' 
+                sh '/mnt/drive1/www/mash/deployment/dev/dstock-dev-build.sh' 
             }
         }
     }
